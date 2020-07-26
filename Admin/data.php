@@ -43,7 +43,7 @@ include 'adm_header.php';
                 <!-- getting Order Details -->
              <?php 
              if(isset($_REQUEST['order'])){
-                 $o_table = mysql_query("SELECT * FROM t_order_user_det ORDER BY o_date DESC");
+                 $o_table = mysqli_query($conn, "SELECT * FROM t_order_user_det ORDER BY o_date DESC");
                 ?> 
                  <div class="box">
                 <div class="box-header">
@@ -68,7 +68,7 @@ include 'adm_header.php';
                     </thead>
                     <tbody>
                         <?php
-                        while ($row = mysql_fetch_array($o_table)) 
+                        while ($row = mysqli_fetch_array($o_table)) 
                             {
                         echo "<tr>";
                             echo"<td>{$row['o_date']}</td>";
@@ -116,7 +116,7 @@ include 'adm_header.php';
               
                 <?php 
              if(isset($_REQUEST['customer'])){
-                 $u_table = mysql_query("SELECT * FROM t_user");
+                 $u_table = mysqli_query($conn, "SELECT * FROM t_user");
                 ?> 
                  <div class="box">
                 <div class="box-header">
@@ -139,7 +139,7 @@ include 'adm_header.php';
                     </thead>
                     <tbody>
                         <?php
-                        while ($row = mysql_fetch_array($u_table)) 
+                        while ($row = mysqli_fetch_array($u_table)) 
                             {
                         echo "<tr>";
                             echo"<td>{$row['u_id']}</td>";
@@ -180,7 +180,7 @@ include 'adm_header.php';
                 <!-- Supplier Details Starts -->
                 <?php 
              if(isset($_REQUEST['supplier'])){
-                 $s_table = mysql_query("SELECT * FROM t_supplier ");
+                 $s_table = mysqli_query($conn, "SELECT * FROM t_supplier ");
                 ?> 
                  <div class="box">
                 <div class="box-header">
@@ -205,7 +205,7 @@ include 'adm_header.php';
                     </thead>
                     <tbody>
                         <?php
-                        while ($row = mysql_fetch_array($s_table)) 
+                        while ($row = mysqli_fetch_array($s_table)) 
                             {
                         echo "<tr>";
                             echo"<td>{$row['s_id']}</td>";
@@ -251,7 +251,7 @@ include 'adm_header.php';
               
                 <?php 
              if(isset($_REQUEST['admin'])){
-                 $adm_table = mysql_query("SELECT * FROM t_admin");
+                 $adm_table = mysqli_query($conn, "SELECT * FROM t_admin");
                 ?> 
                  <div class="box">
                 <div class="box-header">
@@ -269,7 +269,7 @@ include 'adm_header.php';
                     </thead>
                     <tbody>
                         <?php
-                        while ($row = mysql_fetch_array($adm_table)) 
+                        while ($row = mysqli_fetch_array($adm_table)) 
                             {
                         echo "<tr>";
                             echo"<td>{$row['a_name']}</td>";

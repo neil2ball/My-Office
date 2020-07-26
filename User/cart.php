@@ -4,38 +4,6 @@ include'header.php';
 
 ?>
 
-<?php 
-
-if(isset($_POST['buy'])){
-    $nos = $_POST['qty'];
-    $p_id = $_POST['pid'];
-    
-    $query = mysql_query("SELECT p_name, p_price, p_qty FROM t_product WHERE p_id = '$p_id'");
-    while ($row = mysql_fetch_array($query)) {
-      $p_name =  $row['p_name'];
-      $p_price =  $row['p_price'];
-      $p_qty =  $row['p_qty'];
-        
-        if($p_qty >= $nos)
-        {        $avl = $p_qty-$nos;
-           // echo"$nos product has been orderd, Now $avl available products";
-            
-                 $cart_data = mysql_query("INSERT INTO t_cart "
-                                       . "(u_id, p_id, c_p_qty, p_name, p_price)"
-                                . "VALUES ('$id','$p_id', '$nos', '$p_name', '$p_price')"); 
-                 
-            $product_update = mysql_query("UPDATE t_product SET p_qty = '$avl' WHERE p_id = '$p_id' ");
-        }
-        else{
-            echo"You required $nos product and $p_qty product are available";
-        }
-    }
-    
-    
-}
-
-?>
-
 <div class="container">
 	<div class="row">
       <div class="table-responsive">
@@ -54,7 +22,7 @@ if(isset($_POST['buy'])){
           <tbody id="myTable">
             <?php
             $num = 1;
-              while ($row1 = mysql_fetch_array($cart)) {
+              while ($row1 = mysqli_fetch_array($cartResult)) {
               $ttl_amt  =  $row1['p_price']*$row1['c_p_qty'];
                   
                 echo"<tr>
@@ -79,7 +47,7 @@ if(isset($_POST['buy'])){
     
     <span class="input-group-btn">
       <?php   echo"<a class='btn btn-default' href=\"invoice.php?inv_id=$id\">CheckOut!</a>" ; ?>
-      </span
+      </span>
 </div>
 
 <script>
@@ -194,21 +162,37 @@ $(document).ready(function(){
 </script>
 
 <?php 
-if(isset($_POST['del_id'])){
-    
-    $del_id = $_POST['del_id'];
-    $del_product = mysql_query("SELECT c_p_qty FROM t_cart WHERE p_id= '$del_id'");
-    while ($row2 = mysql_fetch_array($del_product)) {
-        $del_prdt = $row2['c_p_qty'];
-        $get_product = mysql_query("SELECT p_qty FROM t_product WHERE p_id= '$del_id'");
-        
-        while ($row3 = mysql_fetch_array($get_product)) {
-         $rem_prdt =   $row3['p_qty'];
-         $now = $del_prdt+$rem_prdt;
-         $update = mysql_query("UPDATE t_product SET p_qty = '$now' WHERE p_id = '$del_id' ");
+if(isset($_SERVER['QUERY_STRING'])){
+
+	function clean($str) {
+		$str = @trim($str);
+		$str = stripslashes($str);
+		include ('../includes/connection.php');
+		return mysqli_real_escape_string($conn, $str);
+	}
+	
+
+    $get_string = $_SERVER['QUERY_STRING'];
+    parse_str($get_string, $get_array);
+
+    if(isset($get_array['del_id'])) {
+
+        $p_id = clean($get_array['del_id']);
+
+        $del_product = $conn->prepare("SELECT c_id FROM t_cart WHERE p_id= ? AND u_id= ?");
+        $del_product->bind_param('ss', $p_id, $id);
+        $del_product->execute();
+        $del_productResult = $del_product->get_result();
+
+        if ($row2 = mysqli_fetch_array($del_productResult))
+        {
+            $prdt_del = clean($row2['c_id']);
+            $del_prdt = $conn->prepare("DELETE FROM t_cart WHERE c_id= ?");
+            $del_prdt->bind_param('s', $prdt_del);
+            $del_prdt->execute();
+            $del_prdtResult = $del_prdt->get_result();
         }
     }
-    
 }
  else {
     

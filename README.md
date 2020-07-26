@@ -1,7 +1,7 @@
 # My-Office
 
 ## Technology used -: 
-1. Core PHP 5.5
+1. Core PHP 7.4
 2. Procedural implementaion of MySQL
 
 ## For runnig the project successfull on your local system use XAMPP 5.5

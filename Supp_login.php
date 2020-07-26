@@ -1,13 +1,12 @@
-
 <?php 
-	
 	//Include database connection details
 	require_once('includes/connection.php');
 ?>
 
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Supplier | My Office</title>
@@ -25,71 +24,72 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="Admin/dist/css/skins/_all-skins.min.css">
 
-  </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper hold-transition skin-blue sidebar-mini">
 
-      <header class="main-header">
-        <!-- Logo -->
-        <a href="index.php" class="logo">
-          
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Supplier &nbsp;</b>My Office</span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top" role="navigation">
-          
-        </nav>
-      </header>
-      
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index.php" class="logo">
+
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Supplier &nbsp;</b>My Office</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+
+            </nav>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
             <!-- right column -->
             <div class="col-md-3">
-                
+
             </div>
-            
+
             <div class="col-md-6" style="margin-top: 10%;">
-              <!-- Horizontal Form -->
-              <div class="box box-info">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Supplier :: My Office</h3>
-                </div><!-- /.box-header -->
-                <!-- form start -->
-                <form class="form-horizontal" method="post" action="supplier_auth.php">
-                  <div class="box-body">
-                    <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                      <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputEmail3" 
-                                 placeholder="Email" name="email">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                      <div class="col-sm-10">
-                          <input type="password" class="form-control" id="inputPassword3" 
-                                 placeholder="Password" name="pwd">
-                      </div>
-                    </div>
-                    
-                  </div><!-- /.box-body -->
-                  <div class="box-footer">
-                       <button type="submit" class="btn btn-info " name="sup_login">Sign in</button>
-                      <button type="reset" class="btn btn-default pull-right">Cancel</button>
-                     
-                  </div><!-- /.box-footer -->
-                </form>
-              </div><!-- /.box -->
-              <!-- general form elements disabled -->
+                <!-- Horizontal Form -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Supplier :: My Office</h3>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" method="post" action="supplier_auth.php">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email"
+                                        name="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="inputPassword3"
+                                        placeholder="Password" name="pwd">
+                                </div>
+                            </div>
+
+                        </div><!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-info " name="sup_login">Sign in</button>
+                            <button type="reset" class="btn btn-default pull-right">Cancel</button>
+
+                        </div><!-- /.box-footer -->
+                    </form>
+                </div><!-- /.box -->
+                <!-- general form elements disabled -->
             </div>
-            
+
         </div>
     </div>
-      
-           
-      
+
+
+
     <!-- jQuery 2.1.4 -->
     <script src="Admin/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
@@ -100,9 +100,8 @@
     <script src="Admin/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="Admin/dist/js/demo.js"></script>
-  
-            
-      </body>
+
+
+</body>
+
 </html>
-
-

@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 10.1.8-MariaDB : Database - my_office
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -23,25 +24,27 @@ DROP TABLE IF EXISTS `t_admin`;
 CREATE TABLE `t_admin` (
   `a_name` varchar(30) NOT NULL,
   `a_mail` varchar(30) NOT NULL,
-  `a_pwd` varchar(30) NOT NULL,
+  `a_pwd` varchar(255) NOT NULL,
   `a_loc` varchar(30) NOT NULL COMMENT 'Location of admin',
   PRIMARY KEY (`a_mail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `t_admin` */
 
-insert  into `t_admin`(`a_name`,`a_mail`,`a_pwd`,`a_loc`) values ('Admin001','admin1@admin.com','admin1','Location001');
+insert  into `t_admin`(`a_name`,`a_mail`,`a_pwd`,`a_loc`) values ('Admin001','admin1@admin.com','$argon2id$v=19$m=65536,t=4,p=1$dUdMRzRBY2gzSUVuaE9iLg$z2ZTARB8jti84tJa0zi469I/7KHGWGZ+npyebbp2seA','Location001');
 
 /*Table structure for table `t_cart` */
 
 DROP TABLE IF EXISTS `t_cart`;
 
 CREATE TABLE `t_cart` (
+  `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `u_id` int(11) NOT NULL,
   `p_id` int(11) NOT NULL,
   `c_p_qty` int(11) NOT NULL COMMENT 'Cart product quantity',
   `p_name` varchar(30) NOT NULL,
-  `p_price` float NOT NULL COMMENT 'Price of one product'
+  `p_price` float NOT NULL COMMENT 'Price of one product',
+   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `t_cart` */
@@ -125,7 +128,7 @@ CREATE TABLE `t_supplier` (
   `a_id` varchar(30) DEFAULT NULL,
   `s_name` varchar(30) NOT NULL,
   `s_email` varchar(30) NOT NULL,
-  `s_pwd` varchar(30) NOT NULL,
+  `s_pwd` varchar(255) NOT NULL,
   `s_mob` varchar(15) NOT NULL,
   `s_city` varchar(30) DEFAULT NULL,
   `s_land` varchar(30) DEFAULT NULL COMMENT 'Landmark',
@@ -137,7 +140,7 @@ CREATE TABLE `t_supplier` (
 
 /*Data for the table `t_supplier` */
 
-insert  into `t_supplier`(`s_id`,`a_id`,`s_name`,`s_email`,`s_pwd`,`s_mob`,`s_city`,`s_land`,`s_state`,`s_add`,`s_zip`) values (1,'admin1@admin.com','supplier1','supplier1@supplier.com','supp1','9876543210',NULL,NULL,NULL,NULL,NULL);
+insert  into `t_supplier`(`s_id`,`a_id`,`s_name`,`s_email`,`s_pwd`,`s_mob`,`s_city`,`s_land`,`s_state`,`s_add`,`s_zip`) values (1,'admin1@admin.com','supplier1','supplier1@supplier.com','$argon2id$v=19$m=65536,t=4,p=1$cTFxek8zcnlRdWRHWTFxNA$CdLfJc5V8ix0fvOsv8Wr3iMNnTJ9ijWsMdyY0N6u3NQ','9876543210',NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `t_user` */
 
@@ -147,7 +150,7 @@ CREATE TABLE `t_user` (
   `u_id` int(11) NOT NULL AUTO_INCREMENT,
   `u_name` varchar(30) NOT NULL,
   `u_email` varchar(30) NOT NULL,
-  `u_pwd` varchar(30) NOT NULL,
+  `u_pwd` varchar(255) NOT NULL,
   `u_mob` varchar(15) NOT NULL,
   `u_city` varchar(30) NOT NULL,
   `u_land` varchar(30) NOT NULL COMMENT 'Landmark',
@@ -159,7 +162,7 @@ CREATE TABLE `t_user` (
 
 /*Data for the table `t_user` */
 
-insert  into `t_user`(`u_id`,`u_name`,`u_email`,`u_pwd`,`u_mob`,`u_city`,`u_land`,`u_state`,`u_add`,`u_zip`) values (1,'user1','user1@user.com','user1','9876543210','varanasi','varanasi','U.P.','varanasi','221005');
+insert  into `t_user`(`u_id`,`u_name`,`u_email`,`u_pwd`,`u_mob`,`u_city`,`u_land`,`u_state`,`u_add`,`u_zip`) values (1,'user1','user1@user.com','$argon2id$v=19$m=65536,t=4,p=1$d1NhaUh0eGlFcUx1aXJNTQ$DfzA4pBDceDTz1FL9ryK/Am5nyK/uPTE9o+IagMHTrA','9876543210','varanasi','varanasi','U.P.','varanasi','221005');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

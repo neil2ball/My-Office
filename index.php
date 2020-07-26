@@ -1,6 +1,6 @@
 <?php 
 $title="Home";
-include'header.php';
+include 'header.php';
 ?>
   <!-- start slider -->
     <div id="fwslider">
@@ -43,49 +43,49 @@ include'header.php';
 <div class="main">
 	<div class="wrap">
 		<div class="section group">
-		  <div class="cont span_2_of_3">
-		  	<h2 class="head">Featured Products</h2>
-			<div class="top-box">
-                            <?php 
-                            $supplier = mysql_query("SELECT * FROM t_supplier WHERE a_id = NULL");
-                            $product = mysql_query("SELECT * FROM t_product ORDER BY p_id DESC");
-while ($row = mysql_fetch_array($product)) {
-        echo " <div class='col_1_of_3 span_1_of_3'> "; 
-	    echo"<div class='inner_content clearfix'>";
-                echo "<a href=\"single.php?product={$row['p_id']}\"/>";
-		    echo"<div class='product_image'> <img src='Supplier/{$row['p_img']}' alt=''/> </div> ";
-                    echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
-                        echo"<div class='price'>";
-			    echo"<div class='cart-left'>";
-				echo"<p class='title'>{$row['p_name']}</p>";
-				echo"<div class='price1'>";
-				    echo"<span class='actual'>Rs. {$row['p_price']}</span>";
-			        echo"</div>";
-			    echo"</div>";
-                echo"</a>";            
-			    echo"<a href ='#'><div class='cart-right'> </div></a>";
-                            
-                            
-			    echo"<div class='clear'></div>";
-			echo"</div>";
-            echo"</div>";
-	echo"</div>";
-                              }
-                            ?>   
+		    <div class="cont span_2_of_3">
+		  	    <h2 class="head">Featured Products</h2>
+			    <div class="top-box">
+                    <?php 
+                    //$supplier = mysqli_query($conn, "SELECT * FROM t_supplier WHERE a_id = NULL");
+                    $product = mysqli_query($conn, "SELECT * FROM t_product ORDER BY p_id DESC");
+
+                    while ($row = mysqli_fetch_array($product))
+                    {
+                        echo " <div class='col_1_of_3 span_1_of_3'> "; 
+	                        echo"<div class='inner_content clearfix'>";
+                                echo "<a href=\"single.php?product={$row['p_id']}\"/>";
+		                        echo"<div class='product_image'> <img src='Supplier/{$row['p_img']}' alt=''/> </div> ";
+                                    echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
+                                        echo"<div class='price'>";
+			                                echo"<div class='cart-left'>";
+				                                echo"<p class='title'>{$row['p_name']}</p>";
+				                                echo"<div class='price1'>";
+				                                    echo"<span class='actual'>Rs. {$row['p_price']}</span>";
+			                                    echo"</div>";
+			                                echo"</div>";
+                                            echo"</a>";            
+			                                echo"<a href ='#'><div class='cart-right'> </div></a>";
+                                            echo"<div class='clear'></div>";
+			                            echo"</div>";
+                                    echo"</div>";
+	                            echo"</div>";
+                    }
+                    ?>   
  <!-- ---------------------------------------------------------------------------------------------------- -->                           
                             
 			  
-				<div class="clear"></div>
-			</div>	
-						 						 			    
-		  </div>
-			
-	   <div class="clear"></div>
-	</div>
-	</div>
-	</div>
-   <?php 
+				                <div class="clear"></div>
+			                </div>	
+						</div>
+
+			            <div class="clear"></div>
+	            </div>
+	        </div>
+	    </div>
+
+<?php 
    include 'includes/footer.php';
-   ?>
+?>
 </body>
 </html>

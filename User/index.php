@@ -47,9 +47,9 @@ include'header.php';
 		  	<h2 class="head">Featured Products</h2>
 			<div class="top-box">
                             <?php 
-                            $supplier = mysql_query("SELECT * FROM t_supplier WHERE a_id = NULL");
-                            $product = mysql_query("SELECT * FROM t_product ORDER BY p_id DESC");
-while ($row = mysql_fetch_array($product)) {
+                            $supplier = mysqli_query($conn, "SELECT * FROM t_supplier WHERE a_id = NULL");
+                            $product = mysqli_query($conn, "SELECT * FROM t_product ORDER BY p_id DESC");
+while ($row = mysqli_fetch_array($product)) {
         echo " <div class='col_1_of_3 span_1_of_3'> "; 
 	    echo "<a href=\"single.php?product={$row['p_id']}\"/>";
 		echo"<div class='inner_content clearfix'>";

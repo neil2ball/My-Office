@@ -2,11 +2,11 @@
 
 $server = "localhost";
 $username ="root";
-$password ="";
+$password ="password";
 $database_name="my_office";
 
-$conn = mysql_connect($server, $username, $password) or die (mysql_error());
-$select_db = mysql_select_db($database_name, $conn) or die (mysql_error());
+$conn = mysqli_connect($server, $username, $password);
+$select_db = mysqli_select_db($conn, $database_name) or die (mysqli_error($conn));
 
 
 ?>
