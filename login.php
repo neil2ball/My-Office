@@ -11,14 +11,6 @@ include'header.php';
     	<div class="login">
           	<div class="wrap">
 				<div class="col_1_of_login span_1_of_login">
-					<h4 class="title">New Customers</h4>
-					<p>Follow the link and get an Account in My Ofice</p>
-					<div class="button1">
-					   <a href="register.php"><input type="submit" name="Submit" value="Create an Account"></a>
-					 </div>
-					<div class="clear"></div>
-				</div>
-				<div class="col_1_of_login span_1_of_login">
 				<div class="login-title">
 	           		<h4 class="title">Registered Customers</h4>
 					<div id="loginbox" class="loginbox">

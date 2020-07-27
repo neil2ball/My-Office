@@ -114,7 +114,8 @@
         <div class="wrap">
 
             <div class="cssmenu">
-                <ul> <?php echo "<li><a href=\"usr_profile.php?usr_id=$id\"> Profile</a></li> |"; ?>
+                <ul>
+                    <li><a href="seller.php">Seller</a></li> |
                     <li><a href="signout.php">Log Out</a></li>
                 </ul>
             </div>

@@ -39,7 +39,7 @@ include'header.php';
                             <a href=\"single.php?product={$row['p_id']}\">
 				                    <div class='inner_content clearfix'>
 				                      <div class='product_image'>
-					                      <img src='Supplier/{$row['p_img']}'/>
+					                      <img src='{$row['p_img']}' alt='' width='200' height='200'/>
 				                      </div>
                               <div class='sale-box'><span class='on_sale title_shop'>New</span></div>	
                                 <div class='price'>
@@ -64,7 +64,7 @@ include'header.php';
                             <a href=\"single.php?product={$row['p_id']}\">
 				                    <div class='inner_content clearfix'>
 				                      <div class='product_image'>
-					                      <img src='Supplier/{$row['p_img']}'/>
+					                      <img src='{$row['p_img']}' alt='' width='200' height='200'/>
 				                      </div>
                               <div class='sale-box'><span class='on_sale title_shop'>New</span></div>	
                                 <div class='price'>
@@ -89,9 +89,29 @@ include'header.php';
               $conn->close();
 
             } else {
-                  echo '<script language="javascript">';
-                    echo 'alert("Unable to search..."); location.href="index.php"';
-                  echo '</script>';
+              $product = mysqli_query($conn, "SELECT * FROM t_product ORDER BY p_id DESC");
+
+              while ($row = mysqli_fetch_array($product))
+              {
+                  echo " <div class='col_1_of_3 span_1_of_3'> "; 
+                    echo"<div class='inner_content clearfix'>";
+                          echo "<a href=\"single.php?product={$row['p_id']}\"/>";
+                      echo"<div class='product_image'> <img src='{$row['p_img']}' alt='' width='200' height='200'/> </div> ";
+                              echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
+                                  echo"<div class='price'>";
+                                echo"<div class='cart-left'>";
+                                  echo"<p class='title'>{$row['p_name']}</p>";
+                                  echo"<div class='price1'>";
+                                      echo"<span class='actual'>Rs. {$row['p_price']}</span>";
+                                    echo"</div>";
+                                echo"</div>";
+                                      echo"</a>";            
+                                echo"<a href ='#'><div class='cart-right'> </div></a>";
+                                      echo"<div class='clear'></div>";
+                            echo"</div>";
+                              echo"</div>";
+                        echo"</div>";
+              }
             }
             
             ?>

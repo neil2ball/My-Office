@@ -1,87 +1,5 @@
-
-<div class="footer">
-		<div class="footer-top">
-			<div class="wrap">
-			  <div class="section group example">
-				<div class="col_1_of_2 span_1_of_2">
-					<ul class="f-list">
-					  <li><img src="images/2.png"><span class="f-text">Free Shipping on orders over $ 100</span><div class="clear"></div></li>
-					</ul>
-				</div>
-				<div class="col_1_of_2 span_1_of_2">
-					<ul class="f-list">
-					  <li><img src="images/3.png"><span class="f-text">Call us! toll free-222-555-6666 </span><div class="clear"></div></li>
-					</ul>
-				</div>
-				<div class="clear"></div>
-		      </div>
-			</div>
-		</div>
-		<div class="footer-middle">
-			<div class="wrap">
-			 <div class="section group example">
-			  <div class="col_1_of_f_1 span_1_of_f_1">
-				 <div class="section group example">
-				   <div class="col_1_of_f_2 span_1_of_f_2">
-				      <h3>Facebook</h3>
-						
- 				  </div>
-				  <div class="col_1_of_f_2 span_1_of_f_2">
-						<h3>Google Plus</h3>
-				       <div class="recent-tweet">
-							<div class="">
-								<span> </span>
-							</div>
-							<div class="recent-tweet-info">
-								<p> </p>
-							</div>
-							<div class="clear"> </div>
-					   </div>
-					   
-				</div>
-				<div class="clear"></div>
-		      </div>
- 			 </div>
-			 <div class="col_1_of_f_1 span_1_of_f_1">
-			   <div class="section group example">
-				 <div class="col_1_of_f_2 span_1_of_f_2">
-				    <h3>Information</h3>
-						<ul class="f-list1">
-						    <li><a href="#"> </a></li>
-				            
-			         	</ul>
- 				 </div>
-				 <div class="col_1_of_f_2 span_1_of_f_2">
-				   <h3>Contact us</h3>
-						<div class="company_address">
-					                <p>Varanasi</p>
-							   		<p>U.P.</p>
-							   		<p>India</p>
-					   		<p>Phone:(00) 222 666 444</p>
-					   		<p>Fax: (000) 000 00 00 0</p>
-					 	 	<p>Email: <span>mail[at]myoffice.com</span></p>
-					   		
-					   </div>
-					   <div class="social-media">
-						     <ul>
-						        <li> <span class="simptip-position-bottom simptip-movable" data-tooltip="Google"><a href="#" target="_blank"> </a></span></li>
-						        <li><span class="simptip-position-bottom simptip-movable" data-tooltip="Linked in"><a href="#" target="_blank"> </a> </span></li>
-						        <li><span class="simptip-position-bottom simptip-movable" data-tooltip="Rss"><a href="#" target="_blank"> </a></span></li>
-						        <li><span class="simptip-position-bottom simptip-movable" data-tooltip="Facebook"><a href="#" target="_blank"> </a></span></li>
-						    </ul>
-					   </div>
-				</div>
-				<div class="clear"></div>
-		    </div>
-		   </div>
-		  <div class="clear"></div>
-		    </div>
-		  </div>
-		</div>
-		<div class="footer-bottom">
-			<div class="wrap">
-	             <div class="copy">
-                         <?php function auto_copyright($year = 'auto')
+<footer class="main-footer">
+        <?php function auto_copyright($year = 'auto')
                 { 
                    if(intval($year) == 'auto')
                        { $year = date('Y'); } 
@@ -95,17 +13,44 @@
                  if(intval($year) > date('Y'))
                      { echo date('Y'); } 
  } ?>
-			        <p>Copyright &copy; <?php auto_copyright('2015');  // 2015 - 2016 ?> My Office </p>
-		         </div>
-				<div class="f-list2">
-				 <ul>
-					<li class="active"><a href="about.php">About Us</a></li> |
-					<li><a href="delivery.php">Delivery & Returns</a></li> |
-					<li><a href="delivery.php">Terms & Conditions</a></li> |
-					
-				 </ul>
-			    </div>
-			    <div class="clear"></div>
-		      </div>
-	     </div>
-	</div>
+        <strong>Copyright &copy; <?php auto_copyright('2015');  // 2015 - 2016 ?> <a href="#">My Office</a>.</strong> All rights reserved.
+      </footer>
+<!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- Morris.js charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="plugins/morris/morris.min.js"></script>
+    <!-- Sparkline -->
+    <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- jvectormap -->
+    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="plugins/knob/jquery.knob.js"></script>
+    <!-- daterangepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- datepicker -->
+    <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/app.min.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="dist/js/pages/dashboard.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+  </body>
+</html>

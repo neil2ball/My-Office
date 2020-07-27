@@ -72,10 +72,10 @@ include 'includes/connection.php';
 			 <div class="cssmenu">
 				<ul>
 					
-                                    <li><a href="Admin_login.php">Admin Login</a></li> |
-                                    <li><a href="Supp_login.php">Supplier Login</a></li> |
-					<li><a href="login.php"> User Log In</a></li> |
-					<li><a href="register.php"> User Sign Up</a></li>
+                    <li><a href="Admin_login.php">Admin Login</a></li> |
+					<li><a href="Teacher_login.php">Teacher Login</a></li> |
+					<li><a href="login.php"> User Log In</a></li>
+
 				</ul>
 			</div>
 			<div class="clear"></div>
@@ -95,35 +95,6 @@ include 'includes/connection.php';
 			</ul>
 			</div>
 		</div>
-	   <div class="header-bottom-right">
-         <div class="search">
-             
-             <form action="veg.php" method="get">
-                 <input type="text" class="textbox" name ="name" placeholder="search" required="">
-                 <input type="submit" id="submit" name="search" value="Search" >
-				<div id="response"> </div>
-             </form>		
-        </div>
-               
-	  <div class="tag-list">
-	    <ul class="icon1 sub-icon1 profile_img">
-			<li><a class="active-icon c1" href="#"> </a>
-				<ul class="sub-icon1 list">
-					<li><h3>sed diam nonummy</h3><a href=""></a></li>
-					<li><p>Lorem ipsum dolor sit amet, consectetuer  <a href="">adipiscing elit, sed diam</a></p></li>
-				</ul>
-			</li>
-		</ul>
-		<ul class="icon1 sub-icon1 profile_img">
-			<li><a class="active-icon c2" href="#"> </a>
-				<ul class="sub-icon1 list">
-                                    
-					
-				</ul>
-			</li>
-		</ul>
-	    <ul class="last"><li><a href="#">Cart(0)</a></li></ul>
-	  </div>
     </div>
      <div class="clear"></div>
      </div>

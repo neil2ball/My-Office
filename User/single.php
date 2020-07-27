@@ -78,8 +78,8 @@ if(isset($_POST['buy']))
 								echo"<li>";
 									echo"<a href='optionallink.php'>";
 								
-										echo"<img class='etalage_thumb_image' src=\"../Supplier/{$row['p_img']}\" class='img-responsive' />";
-										echo"<img class='etalage_source_image' src=\"../Supplier/{$row['p_img']}\" class='img-responsive' title='' />";
+										echo"<img class='etalage_thumb_image' src=\"../{$row['p_img']}\" class='img-responsive' />";
+										echo"<img class='etalage_source_image' src=\"../{$row['p_img']}\" class='img-responsive' title='' />";
 
 			    					echo"</a>";
 								echo"</li>";

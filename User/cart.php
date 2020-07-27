@@ -46,7 +46,7 @@ include'header.php';
 	</div>
     
     <span class="input-group-btn">
-      <?php   echo"<a class='btn btn-default' href=\"invoice.php?inv_id=$id\">CheckOut!</a>" ; ?>
+      <?php   echo"<a class='btn btn-default' href=\"checkout.php?inv_id=$id\">CheckOut!</a>" ; ?>
       </span>
 </div>
 

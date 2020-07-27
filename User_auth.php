@@ -18,7 +18,7 @@ if (isset($_POST['usr_login'])){
 
 	//Create query
 	      
-	$result = $conn->prepare("SELECT * FROM t_user WHERE u_email= ?");
+	$result = $conn->prepare("SELECT * FROM t_supplier WHERE s_email= ?");
 	$result->bind_param('s', $usr_mail);
 	$result->execute();
 	$resultResult = $result->get_result();
@@ -35,13 +35,13 @@ if (isset($_POST['usr_login'])){
             $result->close();
 			$conn->close();
 			
-			if(password_verify($usr_pwd, $usr_member['u_pwd'])){
+			if(password_verify($usr_pwd, $usr_member['s_pwd'])){
 
 				//Login Successful
 
-				$_SESSION['USR_SESS_MEMBER_ID'] = $usr_member['u_id'];
-				$_SESSION['USR_SESS_MEMBER_NAME'] = $usr_member['u_name'];
-				$_SESSION['USR_SESS_MEMBER_EMAIL'] = $usr_member['u_email'];
+				$_SESSION['USR_SESS_MEMBER_ID'] = $usr_member['s_id'];
+				$_SESSION['USR_SESS_MEMBER_NAME'] = $usr_member['s_name'];
+				$_SESSION['USR_SESS_MEMBER_EMAIL'] = $usr_member['s_email'];
 				
 				session_regenerate_id();
 				session_write_close();

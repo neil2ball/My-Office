@@ -13,11 +13,11 @@ include'header.php';
                 <div class="slide_content">
                     <div class="slide_content_wrap">
                         <!-- Text title -->
-                        <h4 class="title">Premimum Products</h4>
+                        <!--<h4 class="title">Premimum Products</h4>-->
                         <!-- /Text title -->
                         
                         <!-- Text description -->
-                        <p class="description">Lowest Price</p>
+                        <!--<p class="description">Lowest Price</p>-->
                         <!-- /Text description -->
                     </div>
                 </div>
@@ -28,8 +28,8 @@ include'header.php';
                 <img src="../images/banner1.jpg" alt=""/>
                 <div class="slide_content">
                     <div class="slide_content_wrap">
-                        <h4 class="title">Fresh and Best</h4>
-                        <p class="description">Vegitables</p>
+                        <!--<h4 class="title">Fresh and Best</h4>-->
+                        <!--<p class="description">Vegitables</p>-->
                     </div>
                 </div>
             </div>
@@ -49,25 +49,26 @@ include'header.php';
                             <?php 
                             $supplier = mysqli_query($conn, "SELECT * FROM t_supplier WHERE a_id = NULL");
                             $product = mysqli_query($conn, "SELECT * FROM t_product ORDER BY p_id DESC");
-while ($row = mysqli_fetch_array($product)) {
-        echo " <div class='col_1_of_3 span_1_of_3'> "; 
-	    echo "<a href=\"single.php?product={$row['p_id']}\"/>";
-		echo"<div class='inner_content clearfix'>";
-		    echo"<div class='product_image'> <img src='../Supplier/{$row['p_img']}' alt=''/> </div> ";
-                    echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
-                        echo"<div class='price'>";
-			    echo"<div class='cart-left'>";
-				echo"<p class='title'>{$row['p_name']}</p>";
-				echo"<div class='price1'>";
-				    echo"<span class='actual'>Rs. {$row['p_price']}</span>";
-			        echo"</div>";
-			    echo"</div>";
-			    echo"<div class='cart-right'> </div>";
-			    echo"<div class='clear'></div>";
-			echo"</div>";				
-                echo"</div>";
-            echo"</a>";
-	echo"</div>";
+
+                            while ($row = mysqli_fetch_array($product)) {
+                                echo " <div class='col_1_of_3 span_1_of_3'> "; 
+	                                echo "<a href=\"single.php?product={$row['p_id']}\"/>";
+		                            echo"<div class='inner_content clearfix'>";
+		                                echo"<div class='product_image'> <img src='../{$row['p_img']}'  alt='' width='200' height='200'/> </div> ";
+                                            echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
+                                                echo"<div class='price'>";
+			                                        echo"<div class='cart-left'>";
+				                                        echo"<p class='title'>{$row['p_name']}</p>";
+				                                        echo"<div class='price1'>";
+				                                            echo"<span class='actual'>Rs. {$row['p_price']}</span>";
+			                                            echo"</div>";
+			                                        echo"</div>";
+			                                        echo"<div class='cart-right'> </div>";
+			                                        echo"<div class='clear'></div>";
+			                                    echo"</div>";				
+                                            echo"</div>";
+                                    echo"</a>";
+	                            echo"</div>";
                               }
                             ?>   
  <!-- ---------------------------------------------------------------------------------------------------- -->                           
