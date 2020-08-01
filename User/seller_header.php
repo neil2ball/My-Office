@@ -9,7 +9,7 @@
         echo '</script>';
       } 
      $id = $_SESSION['USR_SESS_MEMBER_ID'];
-     $supp_name= $_SESSION['USR_SESS_MEMBER_NAME']  ;
+     $supp_name= $_SESSION['USR_SESS_MEMBER_NAME'];
     $supp_email =$_SESSION['USR_SESS_MEMBER_EMAIL']; 
 ?>
 
@@ -112,7 +112,7 @@
 <?php           
         echo"<ul class='sidebar-menu'>";
             
-            echo"<li><a href='index.php'><i class='fa fa-dashboard'></i><span>Dashboard</span></a></li>";
+            echo"<li><a href='seller.php'><i class='fa fa-dashboard'></i><span>Dashboard</span></a></li>";
             echo"<li><a href=\"data.php?order\" target='_blank'><i class='fa fa-circle-o text-red'></i> <span>Today's Order</span></a></li>";
             echo"<li><a href=\"data.php?product\" target='_blank'><i class='fa fa-circle-o text-yellow'></i> <span>Product Status</span></a></li>";
             echo"<li><a href=\"#\" target='_blank'><i class='fa fa-circle-o text-aqua'></i> <span>Information</span></a></li>";

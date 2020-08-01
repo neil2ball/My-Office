@@ -9,7 +9,7 @@
         echo '</script>';
       } 
     $id = $_SESSION['USR_SESS_MEMBER_ID'];
-    $usr_name= $_SESSION['USR_SESS_MEMBER_NAME']  ;
+    $usr_name= $_SESSION['USR_SESS_MEMBER_NAME'];
     $usr_email =$_SESSION['USR_SESS_MEMBER_EMAIL']; 
 ?>
 <!DOCTYPE HTML>
@@ -115,6 +115,15 @@
 
             <div class="cssmenu">
                 <ul>
+                    <?php
+                        $balance = $conn->prepare("SELECT s_bal FROM t_supplier WHERE s_id= ?");
+                        $balance->bind_param('i', $id);
+                        $balance->execute();
+                        $balResult = $balance->get_result();
+                        $bal = mysqli_fetch_array($balResult);
+
+                        echo"<li>Balance: ₩₡{$bal['s_bal']}</li>    |";
+                    ?>
                     <li><a href="seller.php">Seller</a></li> |
                     <li><a href="signout.php">Log Out</a></li>
                 </ul>

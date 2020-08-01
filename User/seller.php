@@ -22,7 +22,6 @@ include 'seller_header.php';
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <?php 
-                  $cnt=0;
 
                   function clean($str) {
                     $str = @trim($str);
@@ -32,32 +31,13 @@ include 'seller_header.php';
                   }
                   // getting Supplier's Product id
                   $id = clean($id);
-                  $supp_det = $conn->prepare("SELECT p_id FROM t_product WHERE s_id= ?");
-                  $supp_det->bind_param('s', $id);
-                  $supp_det->execute();
-                  $supp_detResult = $supp_det->get_result();
 
-                  while ($row = mysqli_fetch_array($supp_detResult)) 
-                  {
-                    $s_p_id = clean($row['p_id']);
-                    $order = $conn->prepare("SELECT o_id FROM t_order WHERE p_id= ?");
-                    $order->bind_param('s', $s_p_id);
-                    $order->execute();
-                    $orderResult = $order->get_result();
+                  $order_user_det = $conn->prepare("SELECT * FROM t_order_user_det WHERE (b_id= ?) OR (s_id= ?)");
+                  $order_user_det->bind_param('ii', $id, $id);
+                  $order_user_det->execute();
+                  $orderResult = $order_user_det->get_result();
 
-                    while ($row1 = mysqli_fetch_array($orderResult)) 
-                    {
-
-                      $o_u_det = clean($row1['o_id']);
-                      $order_user_det = $conn->prepare("SELECT * FROM t_order_user_det WHERE o_id = ?");
-                      $order_user_det->bind_param('s', $o_u_det);
-
-                      if($order_user_det->execute())
-                      {
-                        $cnt = $cnt +1;
-                      }
-                    }
-                  }
+                  $cnt = mysqli_num_rows($orderResult);
                    
                   //$num_order = mysqli_num_rows($order_user_det);
                   ?>
@@ -181,7 +161,8 @@ include 'seller_header.php';
   if (!isset($_FILES['image']['tmp_name']))
   {
 	  echo "";
-	} else {
+  } else 
+  {
 	  $file       = $_FILES['image']['tmp_name'];
 	  $image      = addslashes(file_get_contents($_FILES['image']['tmp_name']));
 	  $image_name = addslashes($_FILES['image']['name']);
@@ -194,24 +175,33 @@ include 'seller_header.php';
     $wt          = $_POST['wt'];
     $price       = $_POST['price'];
     $description = $_POST['desc'];
-                       
-    $save = $conn->prepare("INSERT INTO t_product ( s_id, p_name, p_qty, p_img, p_wt, p_price, p_desc) "
-    . "VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $save->bind_param('sssssss', $id, $name, $qty, $img, $wt, $price, $description);
+
+    $s_t = $conn->prepare("SELECT a_id FROM t_supplier WHERE s_id= ?");
+    $s_t->bind_param('i', $id);
+    $s_t->execute();
+    $s_tResult = $s_t->get_result();
+    $s_t_Array = mysqli_fetch_array($s_tResult);
+
+    $s_t_email = $s_t_Array['a_id'];
+    echo $s_t_email;
+    $save = $conn->prepare("INSERT INTO t_product ( s_id, p_name, s_t_email, p_qty, p_img, p_wt, p_price, p_desc) "
+    . "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $save->bind_param('issisiis', $id, $name, $s_t_email, $qty, $img, $wt, $price, $description);
                            
-		if($save->execute()) 
+	if($save->execute()) 
     {
       echo '<script language="javascript">';
         echo 'alert("Record Successfully inserted"); location.href="index.php"';
       echo '</script>';
-		} else {
-      ?>
-    <script language="javascript">
-    alert("<?php die(mysqli_error($conn)) ?>");
-    location.href = "index.php";
-    </script>;
+    } else 
+    {
+    ?>
+        <script language="javascript">
+            alert("<?php die(mysqli_error($conn)) ?>");
+                location.href = "index.php";
+        </script>;
     <?php
     }		
-	}
+  }
   ?>
 </div>

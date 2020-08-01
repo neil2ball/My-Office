@@ -72,6 +72,7 @@ include'header.php';
           $buyId = $buy['s_id'];
           $buyName = $buy['s_name'];
           $buyEmail = $buy['s_email'];
+          $buyTeachEmail = $buy['a_id'];
           $buyLoc = $buy['s_loc'];
           $buyBal = $buy['s_bal'];
 
@@ -84,7 +85,8 @@ include'header.php';
           {
 
             $c_id   = $row1['c_id'];
-            $s_id   = $row1['u_id'];
+            $b_id   = $row1['u_id'];
+            $s_id   = $row1['s_id'];
             $p_id   = $row1['p_id'];
             $p_amt  = $row1['c_p_qty'];
             $p_price  = $row1['p_price'];
@@ -97,9 +99,11 @@ include'header.php';
             $seller->execute();
             $sellerResult = $seller->get_result();
             $sell = mysqli_fetch_array($sellerResult);
-
+            
+            $sellId = $sell['s_id'];
             $sellName = $sell['s_name'];
             $sellEmail = $sell['s_email'];
+            $sellTeachEmail = $sell['a_id'];
             $sellLoc = $sell['s_loc'];
 
             if($buyBal >= $price)
@@ -114,9 +118,9 @@ include'header.php';
               $buyVer = 0;
               $sellVer = 0;
               $date_now = date('Y-m-d H:i:s');                      
-              $save = $conn->prepare("INSERT INTO t_order_user_det ( p_id, p_name, p_amt, u_id, u_name, u_email, u_loc, s_name, s_email, s_loc, o_date, o_escrow, u_ver, s_ver) "
-              . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-              $save->bind_param('isiisssssssiii', $p_id, $p_name, $p_amt, $buyId, $buyName, $buyEmail, $buyLoc, $sellName, $sellEmail, $sellLoc, $date_now, $price, $buyVer, $sellVer);
+              $save = $conn->prepare("INSERT INTO t_order_user_det ( p_id, p_name, p_amt, b_id, b_name, b_email, b_t_email, b_loc, s_id, s_name, s_email, s_t_email, s_loc, o_date, o_escrow, b_ver, s_ver) "
+              . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+              $save->bind_param('isiissssisssssiii', $p_id, $p_name, $p_amt, $buyId, $buyName, $buyEmail, $buyTeachEmail, $buyLoc, $sellId, $sellName, $sellEmail, $sellTeachEmail, $sellLoc, $date_now, $price, $buyVer, $sellVer);
               $save->execute();
 
               $cart = $conn->prepare("DELETE FROM t_cart WHERE c_id = ?");

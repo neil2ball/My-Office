@@ -24,119 +24,174 @@ include 'seller_header.php';
 
                 <!-- getting Order Details -->
                 <?php 
-             if(isset($_REQUEST['order']))
-             {
-                $cnt=0;
-
-                function clean($str)
-                {
-                  $str = @trim($str);
-                  $str = stripslashes($str);
-                  include ('../includes/connection.php');
-		              return mysqli_real_escape_string($conn, $str);
-                }
-                  
-                $id = clean($id);
-                $supp_det = $conn->prepare("SELECT p_id FROM t_product WHERE s_id = ?");
-                $supp_det->bind_param('s', $id);
-                $supp_det->execute();
-                $supp_detResult = $supp_det->get_result();
-                    
-                   
-                //$num_order = mysqli_num_rows($order_user_det);
-                    
-                 
-              ?>
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Order data Table</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>User Id</th>
-                                    <th>Order Id</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>City</th>
-                                    <th>Landmark</th>
-                                    <th>Address</th>
-                                    <th>Zip</th>
-                                    <th>Total Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                        while ($row = mysqli_fetch_array($supp_detResult)) 
-                        {
-                          // getting Supplier's Product id
-                          $s_p_id = clean($row['p_id']);
-                          $order = $conn->prepare("SELECT o_id FROM t_order WHERE p_id = ?");
-                          $order->bind_param('s', $s_p_id);
-                          $order->execute();
-                          $orderResult = $order->get_result();
-
-                          while ($row1 = mysqli_fetch_array($orderResult)) 
-                          {       
-                            $o_u_det = clean($row1['o_id']);
-                            $order_user_det = $conn->prepare("SELECT * FROM t_order_user_det WHERE o_id = ? ORDER BY o_date DESC"); 
-                            $order_user_det->bind_param('s', $o_u_det);
-                            $order_user_det->execute();
-                            $order_user_detResult = $order_user_det->get_result();
-                            
-                            $cnt = $cnt +1;
+             if(isset($_REQUEST['order'])){
+                 $o_table = $conn->prepare("SELECT * FROM t_order_user_det WHERE (b_email = ?) OR (s_email = ?) ORDER BY o_date DESC");
+                 $o_table->bind_param('ss', $supp_email, $supp_email);
+                 $o_table->execute();
+                 $o_tableResult = $o_table->get_result();
+                ?> 
+                 <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Order data Table</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Order Id</th>
+                        <th>Buy Name</th>
+                        <th>Buy Teacher</th>
+                        <th>Buy Room #</th>
+                        <th>Sell Name</th>
+                        <th>Sell Teacher</th>
+                        <th>Sell Room #</th>
+                        <th>Escrow</th>
+                        <th>Verified</th>
                         
-                    
-                            while ($row = mysqli_fetch_array($order_user_detResult)) 
-                            { 
-                            
-                              echo "<tr>";
-                                echo"<td>{$row['o_date']}</td>";
-                                echo"<td>{$row['u_id']}</td>";
-                                echo"<td>{$row['o_id']}</td>";
-                                echo"<td>{$row['o_name']}</td>";
-                                echo"<td>{$row['o_email']}</td>";
-                                echo"<td>{$row['o_mob']}</td>";
-                                echo"<td>{$row['o_city']}</td>";
-                                echo"<td>{$row['o_land']}</td>";
-                                echo"<td>{$row['o_add']}</td>";
-                                echo"<td>{$row['o_zip']}</td>";
-                                echo"<td>{$row['o_ttl_amt']}</td>";
-                              echo"</tr>";              
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($row = mysqli_fetch_array($o_tableResult)) 
+                            {
+                        echo "<tr>";
+                            echo"<td>{$row['o_date']}</td>";
+                            echo"<td>{$row['o_id']}</td>";
+                            echo"<td>{$row['b_name']}</td>";
+                            echo"<td>{$row['b_t_email']}</td>";
+                            echo"<td>{$row['b_loc']}</td>";
+                            echo"<td>{$row['s_name']}</td>";
+                            echo"<td>{$row['s_t_email']}</td>";
+                            echo"<td>{$row['s_loc']}</td>";
+
+
+                            if ($row['b_ver'] == 1 && $row['s_ver'] == 1)
+                            {
+                                if($row['o_escrow'] > 0)
+                                {
+                                    $sell = $conn->prepare("SELECT s_bal, s_id FROM t_supplier WHERE s_id= ?");
+                                    $sell->bind_param('i', $row['s_id']);
+                                    if($sell->execute())
+                                    {
+                                        $sellResult = $sell->get_result();
+                                        $seller = mysqli_fetch_array($sellResult);
+
+                                        $balance = $seller['s_bal'] + $row['o_escrow'];
+
+                                        $update = $conn->prepare("UPDATE t_supplier SET s_bal= ? WHERE s_id= ?");
+                                        $update->bind_param('ii', $balance, $seller['s_id']);
+
+                                        if($update->execute())
+                                        {
+                                            $empty = $conn->prepare("UPDATE t_order_user_det SET o_escrow= 0 WHERE o_id= ?");
+                                            $empty->bind_param('i', $row['o_id']);
+                                            $empty->execute();
+                                        }
+                                    }
+                                }
+                                echo"<td>₩₡0</td>";
+                                echo"<td>Yes</td>";
+                            } elseif ($row['b_id'] == $row['s_id'])
+                            {
+                                if($row['b_id'] == 0)
+                                {
+                                    $verify = $conn->prepare("UPDATE t_order_user_det SET b_ver= 1 WHERE o_id= ?");
+                                    $verify->bind_param('i', $row['o_id']);
+                                    $verify->execute();
+                                }
+                                if($row['s_id'] == 0)
+                                {
+                                    $verify = $conn->prepare("UPDATE t_order_user_det SET s_ver= 1 WHERE o_id= ?");
+                                    $verify->bind_param('i', $row['o_id']);
+                                    $verify->execute();
+                                }
+
+                                if($row['o_escrow'] > 0)
+                                {
+                                    $sell = $conn->prepare("SELECT s_bal FROM t_supplier WHERE s_id= ?");
+                                    $sell->bind_param('i', $row['s_id']);
+                                    if($sell->execute())
+                                    {
+                                        $sellResult = $sell->get_result();
+                                        $seller = mysqli_fetch_array($sellResult);
+
+                                        $balance = $seller['s_bal'] + $row['o_escrow'];
+
+                                        $update = $conn->prepare("UPDATE t_supplier SET s_bal= ? WHERE s_id= ?");
+                                        $update->bind_param('ii', $balance, $seller['s_id']);
+
+                                        if($update->execute())
+                                        {
+                                            $empty = $conn->prepare("UPDATE t_order_user_det SET o_escrow= 0 WHERE o_id= ?");
+                                            $empty->bind_param('i', $row['o_id']);
+                                            $empty->execute();
+                                        }
+                                    }
+                                }
+                                echo"<td>₩₡0</td>";
+                                echo"<td>Yes</td>";
                             }
+                             elseif ($row['b_ver'] == 0)
+                            {
+                                if($row['b_id'] == $id)
+                                {
+                                    echo"<td>₩₡{$row['o_escrow']}</td>";
+                                    echo"<form action=\"b_ver.php\" method=\"post\">";
+                                        echo"<input type=\"hidden\" name=\"action\" value=\"submit\" />";
+                                        echo"<td><button name=\"o_id\" type=\"submit\" value=\"{$row['o_id']}\">Verify</button></td>";
+                                    echo"</form>";
+                                } else
+                                {
+                                    echo"<td>₩₡{$row['o_escrow']}</td>";
+                                    echo"<td>Pending</td>";
+                                }
+
+                            } elseif ($row['s_ver'] == 0)
+                            {
+                                if($row['s_id'] == $id)
+                                {
+                                    echo"<td>₩₡{$row['o_escrow']}</td>";
+                                    echo"<form action=\"s_ver.php\" method=\"post\">";
+                                        echo"<input type=\"hidden\" name=\"action\" value=\"submit\" />";
+                                        echo"<td><button name=\"o_id\" type=\"submit\" value=\"{$row['o_id']}\">Verify</button></td>";
+                                    echo"</form>";
+                                } else
+                                {
+                                    echo"<td>₩₡{$row['o_escrow']}</td>";
+                                    echo"<td>Pending</td>";
+                                }
+
+                            }
+
+                        echo"</tr>";              
                           }
-                
-                        }
                       
-                       ?>
-
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>User Id</th>
-                                    <th>Order Id</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>City</th>
-                                    <th>Landmark</th>
-                                    <th>Address</th>
-                                    <th>Zip</th>
-                                    <th>Total Amount</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div><!-- /.box-body -->
-                </div>
-                <?php
+                       ?> 
+                        
+                        
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Date</th>
+                        <th>Order Id</th>
+                        <th>Buy Name</th>
+                        <th>Buy Teacher</th>
+                        <th>Buy Room #</th>
+                        <th>Sell Name</th>
+                        <th>Sell Teacher</th>
+                        <th>Sell Room #</th>
+                        <th>Escrow</th>
+                        <th>Verified</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+              </div> 
+             <?php
              }
-             ?>
-                <!-- Order Details Ends -->
+             ?> 
+              <!-- Order Details Ends -->
 
                 <!-- Getting Customers Deatils -->
 

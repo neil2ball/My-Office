@@ -11,13 +11,14 @@ if(isset($_POST['buy']))
     $nos  = clean($_POST['qty']);
     $p_id = clean($_POST['pid']);
     
-	$query = $conn->prepare("SELECT p_name, p_price, p_qty FROM t_product WHERE p_id = ?");
+	$query = $conn->prepare("SELECT s_id, p_name, p_price, p_qty FROM t_product WHERE p_id = ?");
 	$query->bind_param('s', $p_id);
 	$query->execute();
 	$queryResult = $query->get_result();
 
 	while ($row = mysqli_fetch_array($queryResult))
 	{
+      $s_id    =  clean($row['s_id']);
       $p_name  =  clean($row['p_name']);
       $p_price =  clean($row['p_price']);
       $p_qty   =  clean($row['p_qty']);
@@ -27,9 +28,9 @@ if(isset($_POST['buy']))
 			$avl = $p_qty-$nos;
         	// echo"$nos product has been orderd, Now $avl available products";
             
-            $cart_data = $conn->prepare("INSERT INTO t_cart (u_id, p_id, c_p_qty, p_name, p_price)"
-										. "VALUES (?, ?, ?, ?, ?)");
-			$cart_data->bind_param('sssss', $id, $p_id, $nos, $p_name, $p_price);
+            $cart_data = $conn->prepare("INSERT INTO t_cart (u_id, s_id, p_id, c_p_qty, p_name, p_price)"
+										. "VALUES (?, ?, ?, ?, ?, ?)");
+			$cart_data->bind_param('ssssss', $id, $s_id, $p_id, $nos, $p_name, $p_price);
 			$cart_data->execute();
 
 
