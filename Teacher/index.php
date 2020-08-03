@@ -185,6 +185,44 @@ include 'teach_header.php';
                         </div><!-- /.box-footer -->
                     </form>
                 </div>
+
+                <!-- Custom Supplier-->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Transfer Funds to Student Balance :: My Office</h3>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" method="post"
+                        action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <label for="inputEmail4" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="inputEmail4"
+                                        placeholder="Enter Email Address" name="email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputBal4" class="col-sm-2 control-label">Balance</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="inputBal4"
+                                        placeholder="Enter Account Balance" name="bal">
+                                </div>
+                            </div>
+
+                        </div><!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-info " name="bal_reg">Update</button>
+                            <button type="reset" class="btn btn-default pull-right">Cancel</button>
+                        </div><!-- /.box-footer -->
+                    </form>
+                </div>
+
+
             </section><!-- right col -->
 
         </div><!-- /.row (main row) -->
@@ -192,7 +230,6 @@ include 'teach_header.php';
 </div><!-- /.content-wrapper -->
 
 <?php include 'footer.php'; ?>
-
 
 <!-- Supplier Registration-->
 
@@ -258,7 +295,7 @@ include 'teach_header.php';
                     $conn->close();
                     ?>
                     <script language="javascript">
-                    alert('Registration Successfull');
+                    alert('Registration Successful');
                     location.href = "index.php";
                     </script>;
                     <?php 
@@ -305,6 +342,140 @@ include 'teach_header.php';
 </div>
 
 <!-- Supplier Registration Ends-->
+
+<!-- Add to Student Balance Begins-->
+
+<div>
+
+    <?php
+
+    if(isset($_POST['bal_reg']))
+    {
+
+
+      //Function to sanitize placeholders received from the form. Prevents SQL injection
+      function clean($str) {
+        $str = @trim($str);
+        $str = stripslashes($str);
+        include ('../includes/connection.php');
+        return mysqli_real_escape_string($conn, $str);
+      }
+
+      //Sanitize the POST placeholders
+      $id        = clean($id);
+      $supp_mail = clean($_POST['email']);
+      $supp_bal  = clean($_POST['bal']);
+
+
+        $teacher = $conn->prepare("SELECT * from t_supplier where s_email = ?");
+        $teacher->bind_param("s", $id);
+        $teacher->execute();
+        $teacherResult = $teacher->get_result();
+        $teacherArr = mysqli_fetch_array($teacherResult);
+
+        $teacherId = $teacherArr['s_id'];
+        $teacherName = $teacherArr['s_name'];
+        $teacherEmail = $teacherArr['s_email'];
+        $teacherTeachEmail = $teacherArr['a_id'];
+        $teacherLoc = $teacherArr['s_loc'];
+
+        $teachBal = $teacherArr['s_bal'];
+
+        if($teachBal >= $supp_bal)
+        {
+            $teachBal = $teachBal - $supp_bal;
+
+            $teachWD = $conn->prepare("UPDATE t_supplier SET s_bal= ? WHERE s_email = ?");
+            $teachWD->bind_param('is', $teachBal, $id);
+            
+            if($teachWD->execute())
+            {
+
+                $student = $conn->prepare("SELECT * from t_supplier where s_email = ?");
+                $student->bind_param("s", $supp_mail);
+                $student->execute();
+                $studentResult = $student->get_result();
+                $studentArr = mysqli_fetch_array($studentResult);
+
+                $studentId = $studentArr['s_id'];
+                $studentName = $studentArr['s_name'];
+                $studentEmail = $studentArr['s_email'];
+                $studentTeachEmail = $studentArr['a_id'];
+                $studentLoc = $studentArr['s_loc'];
+        
+                $studentBal = $studentArr['s_bal'];
+
+                $studentBal = $studentBal + $supp_bal;
+
+                $save_supp_data = $conn->prepare("UPDATE t_supplier SET s_bal= ? WHERE s_email = ?");
+
+                $save_supp_data->bind_param('is', $studentBal, $supp_mail);
+
+                if($save_supp_data->execute())
+                {
+
+                    $buyVer = 1;
+                    $sellVer = 1;
+                    $productId = 0;
+                    $escrowZero = 0;
+                    $stringAdd = 'Teacher Add to Balance';
+                    $date_now = date('Y-m-d H:i:s');                      
+                    $save = $conn->prepare("INSERT INTO t_order_user_det "
+                    ."(p_id, p_name, p_amt, b_id, b_name, b_email, b_t_email, b_loc,"
+                    ." s_id, s_name, s_email, s_t_email, s_loc, o_date, o_price, o_escrow, b_ver, s_ver) "
+
+                    . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                    $save->bind_param('isiissssisssssiiii', $productId, $stringAdd, $supp_bal, $studentId, $studentName, $studentEmail, $studentTeachEmail,
+                    $studentLoc, $teacherId, $teacherName, $teacherEmail, $teacherTeachEmail, $teacherLoc, $date_now, $supp_bal, $escrowZero, $buyVer, $sellVer);
+                    
+                    if($save->execute())
+                    {
+                        $save_supp_data->close();
+                        $conn->close();
+                        ?>
+                        <script language="javascript">
+                        alert('Funds Transfer Successful');
+                        location.href = "index.php";
+                        </script>;
+                        <?php 
+                    } else {
+                        $save_supp_data->close();
+                        $conn->close();
+                        ?>
+                        <script language="javascript">
+                        alert('Something went wrong with the transaction record entry.');
+                        location.href = "index.php";
+                        </script>;
+                        <?php 
+                    }
+                } else {
+                    $save_supp_data->close();
+                    $conn->close();
+                    ?>
+                    <script language="javascript">
+                    alert('Something went wrong with the balance entry.  Maybe the student is not in the database.');
+                    location.href = "index.php";
+                    </script>;
+                    <?php 
+                }
+            }
+        } else {
+            ?>
+            <script language="javascript">
+            alert('You lack sufficient funds for this transaction.');
+            location.href = "index.php";
+            </script>;
+            <?php
+
+        }
+    }
+        
+  ?>
+
+</div>
+
+<!-- Add to Student Balance Ends -->
 
 <div>
 

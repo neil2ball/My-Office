@@ -39,14 +39,14 @@ include 'seller_header.php';
                     <thead>
                       <tr>
                         <th>Date</th>
-                        <th>Order Id</th>
+                        <th>Product</th>
                         <th>Buy Name</th>
                         <th>Buy Teacher</th>
                         <th>Buy Room #</th>
                         <th>Sell Name</th>
                         <th>Sell Teacher</th>
                         <th>Sell Room #</th>
-                        <th>Escrow</th>
+                        <th>Price</th>
                         <th>Verified</th>
                         
                       </tr>
@@ -57,13 +57,14 @@ include 'seller_header.php';
                             {
                         echo "<tr>";
                             echo"<td>{$row['o_date']}</td>";
-                            echo"<td>{$row['o_id']}</td>";
+                            echo"<td>{$row['p_name']}</td>";
                             echo"<td>{$row['b_name']}</td>";
                             echo"<td>{$row['b_t_email']}</td>";
                             echo"<td>{$row['b_loc']}</td>";
                             echo"<td>{$row['s_name']}</td>";
                             echo"<td>{$row['s_t_email']}</td>";
                             echo"<td>{$row['s_loc']}</td>";
+                            echo"<td>₩₡{$row['o_price']}</td>";
 
 
                             if ($row['b_ver'] == 1 && $row['s_ver'] == 1)
@@ -90,7 +91,6 @@ include 'seller_header.php';
                                         }
                                     }
                                 }
-                                echo"<td>₩₡0</td>";
                                 echo"<td>Yes</td>";
                             } elseif ($row['b_id'] == $row['s_id'])
                             {
@@ -129,7 +129,6 @@ include 'seller_header.php';
                                         }
                                     }
                                 }
-                                echo"<td>₩₡0</td>";
                                 echo"<td>Yes</td>";
                             }
                              elseif ($row['b_ver'] == 0)
@@ -143,7 +142,6 @@ include 'seller_header.php';
                                     echo"</form>";
                                 } else
                                 {
-                                    echo"<td>₩₡{$row['o_escrow']}</td>";
                                     echo"<td>Pending</td>";
                                 }
 
@@ -158,7 +156,6 @@ include 'seller_header.php';
                                     echo"</form>";
                                 } else
                                 {
-                                    echo"<td>₩₡{$row['o_escrow']}</td>";
                                     echo"<td>Pending</td>";
                                 }
 
@@ -174,14 +171,14 @@ include 'seller_header.php';
                     <tfoot>
                       <tr>
                         <th>Date</th>
-                        <th>Order Id</th>
+                        <th>Product</th>
                         <th>Buy Name</th>
                         <th>Buy Teacher</th>
                         <th>Buy Room #</th>
                         <th>Sell Name</th>
                         <th>Sell Teacher</th>
                         <th>Sell Room #</th>
-                        <th>Escrow</th>
+                        <th>Price</th>
                         <th>Verified</th>
                       </tr>
                     </tfoot>
@@ -234,8 +231,18 @@ include 'seller_header.php';
                             echo"<td>{$row['p_wt']}</td>";
                             echo"<td>{$row['p_price']}</td>";
                             echo"<td>{$row['p_desc']}</td>";
-                            echo"<td><a href=\"#\" style='text-decoration:none'>Edit </a></td>";
-                            echo"<td><a href=\"#\" style='text-decoration:none'>Delete</a></td>";
+
+
+                            echo"<form action=\"edit.php\" method=\"post\">";
+                            echo"<input type=\"hidden\" name=\"action\" value=\"submit\" />";
+                            echo"<td><button name=\"p_id\" type=\"submit\" value=\"{$row['p_id']}\">Edit</button></td>";
+                            echo"</form>";
+
+
+                            echo"<form action=\"delete.php\" method=\"post\">";
+                            echo"<input type=\"hidden\" name=\"delete\" value=\"submit\" />";
+                            echo"<td><button name=\"p_id\" type=\"submit\" value=\"{$row['p_id']}\">Delete</button></td>";
+                            echo"</form>";
                            
                           echo"</tr>";              
                         }

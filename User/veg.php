@@ -12,8 +12,7 @@ include'header.php';
             if(isset($_GET['search']))
             {
               $p_search = $_GET['name'];
-                            
-              $count = 0;
+
               $res1 = $conn->prepare("SELECT * FROM t_product WHERE p_name like ? OR p_desc like ?");
 
               $like = "%{$p_search}%";
@@ -22,68 +21,43 @@ include'header.php';
               $res1Result = $res1->get_result();
                           
               while ($row = mysqli_fetch_array($res1Result))
-              {  
-                if($count>=3)
-                { 
+              {
+                if($row['p_qty'] > 0)
+                {
                   echo "<div class='top-box'>
-                          <div class='col_1_of_3 span_1_of_3'> 
-                            <a href=\"single.php?product={$row['p_id']}\">
-				                    <div class='inner_content clearfix'>
-				                      <div class='product_image'>
-					                      <img src='../{$row['p_img']}'/>
-				                      </div>
-                              <div class='sale-box'><span class='on_sale title_shop'>New</span></div>	
-                                <div class='price'>
-					                        <div class='cart-left'>
-							                      <p class='title'>{$row['p_name']}</p>
-							                        <div class='price1'>
-							                          <span class='actual'>Rs. {$row['p_price']}</span>
-							                        </div>
-					                        </div>
-                                  </a>    
-						                      <a href ='#'><div class='cart-right'> </div></a>
-						                      <div class='clear'></div>
-					                      </div>				
-                              </div>
-                            </div>
-                          </div>
-
-                        ";     
-                        
-                  $count=$count-1; 
-                           
-                } else {
-                  echo "<div class='col_1_of_3 span_1_of_3'> 
-                          <a href=\"single.php\">
+                        <div class='col_1_of_3 span_1_of_3'> 
+                          <a href=\"single.php?product={$row['p_id']}\">
 				                  <div class='inner_content clearfix'>
 				                    <div class='product_image'>
-					                    <img src=\"images/pic.jpg\"/>
+					                    <img src='../{$row['p_img']}'/>
 				                    </div>
-                              <div class='sale-box'><span class='on_sale title_shop'>New</span></div>	
-                                <div class='price'>
-					                        <div class='cart-left'>
-							                      <p class='title'>Lorem Ipsum simply</p>
-							                        <div class='price1'>
-							                          <span class='actual'>$12.00</span>
-							                        </div>
-					                        </div>
-						                      <div class='cart-right'> </div>
-						                        <div class='clear'></div>
-					                        </div>				
-                                </div>
-                            </a>
-	                          </div>
-                        ";
-                  $count=$count+1; 
+                            <div class='sale-box'><span class='on_sale title_shop'>New</span></div>	
+                              <div class='price'>
+					                      <div class='cart-left'>
+							                    <p class='title'>{$row['p_name']}</p>
+							                      <div class='price1'>
+							                        <span class='actual'>₩₡ {$row['p_price']}</span>
+							                      </div>
+					                      </div>
+                                </a>    
+						                    <a href ='#'><div class='cart-right'> </div></a>
+						                    <div class='clear'></div>
+					                    </div>				
+                            </div>
+                          </div>
+                        </div>
+
+                      ";
                 }
               }
                             
-            }
-            else{
+            } else {
               $product = mysqli_query($conn, "SELECT * FROM t_product ORDER BY p_id DESC");
 
               while ($row = mysqli_fetch_array($product))
               {
+                if($row['p_qty'] > 0)
+                {
                   echo " <div class='col_1_of_3 span_1_of_3'> "; 
                     echo"<div class='inner_content clearfix'>";
                           echo "<a href=\"single.php?product={$row['p_id']}\"/>";
@@ -93,7 +67,7 @@ include'header.php';
                                 echo"<div class='cart-left'>";
                                   echo"<p class='title'>{$row['p_name']}</p>";
                                   echo"<div class='price1'>";
-                                      echo"<span class='actual'>Rs. {$row['p_price']}</span>";
+                                      echo"<span class='actual'>₩₡ {$row['p_price']}</span>";
                                     echo"</div>";
                                 echo"</div>";
                                       echo"</a>";            
@@ -102,6 +76,7 @@ include'header.php';
                             echo"</div>";
                               echo"</div>";
                         echo"</div>";
+                }
               }
             }
             ?>

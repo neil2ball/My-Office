@@ -47,7 +47,7 @@ if (isset($_POST['adm_login'])) {
 				session_write_close();
 
 				echo '<script language="javascript">';
-                    echo 'alert("Login Successfull"); location.href="Admin/index.php"';
+                    echo 'alert("Login Successful"); location.href="Admin/index.php"';
 				echo '</script>';
 			} else {
 

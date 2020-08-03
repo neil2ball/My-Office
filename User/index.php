@@ -46,30 +46,43 @@ include'header.php';
 		  <div class="cont span_2_of_3">
 		  	<h2 class="head">Featured Products</h2>
 			<div class="top-box">
-                            <?php 
-                            $supplier = mysqli_query($conn, "SELECT * FROM t_supplier WHERE a_id = NULL");
+                            <?php
                             $product = mysqli_query($conn, "SELECT * FROM t_product ORDER BY p_id DESC");
+                            $rowCount = mysqli_num_rows($product);
+                            $rows = array();
 
-                            while ($row = mysqli_fetch_array($product)) {
-                                echo " <div class='col_1_of_3 span_1_of_3'> "; 
-	                                echo "<a href=\"single.php?product={$row['p_id']}\"/>";
-		                            echo"<div class='inner_content clearfix'>";
-		                                echo"<div class='product_image'> <img src='../{$row['p_img']}'  alt='' width='200' height='200'/> </div> ";
-                                            echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
-                                                echo"<div class='price'>";
-			                                        echo"<div class='cart-left'>";
-				                                        echo"<p class='title'>{$row['p_name']}</p>";
-				                                        echo"<div class='price1'>";
-				                                            echo"<span class='actual'>Rs. {$row['p_price']}</span>";
+                            while($row = mysqli_fetch_array($product))
+                            {
+                                $rows[] = $row;
+                            }
+
+                            for ($i = 0; $i < 10; $i++)
+                            {
+                                $rowRand = rand(0, $rowCount - 1);
+                                $row1 = $rows[$rowRand];
+                                
+                                if($row1['p_qty'] > 0)
+                                {
+                                    echo " <div class='col_1_of_3 span_1_of_3'> "; 
+	                                    echo "<a href=\"single.php?product={$row1['p_id']}\"/>";
+		                                echo"<div class='inner_content clearfix'>";
+		                                    echo"<div class='product_image'> <img src='../{$row1['p_img']}'  alt='' width='200' height='200'/> </div> ";
+                                                echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
+                                                    echo"<div class='price'>";
+			                                            echo"<div class='cart-left'>";
+				                                            echo"<p class='title'>{$row1['p_name']}</p>";
+				                                            echo"<div class='price1'>";
+				                                                echo"<span class='actual'>₩₡ {$row1['p_price']}</span>";
+			                                                echo"</div>";
 			                                            echo"</div>";
-			                                        echo"</div>";
-			                                        echo"<div class='cart-right'> </div>";
-			                                        echo"<div class='clear'></div>";
-			                                    echo"</div>";				
-                                            echo"</div>";
-                                    echo"</a>";
-	                            echo"</div>";
-                              }
+			                                            echo"<div class='cart-right'> </div>";
+			                                            echo"<div class='clear'></div>";
+			                                        echo"</div>";				
+                                                echo"</div>";
+                                        echo"</a>";
+                                    echo"</div>";
+                                }
+                            }
                             ?>   
  <!-- ---------------------------------------------------------------------------------------------------- -->                           
                             

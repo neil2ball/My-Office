@@ -46,7 +46,7 @@ include'header.php';
 					                        <div class='cart-left'>
 							                      <p class='title'>{$row['p_name']}</p>
 							                      <div class='price1'>
-							                        <span class='actual'>Rs. {$row['p_price']}</span>
+							                        <span class='actual'>₩₡ {$row['p_price']}</span>
 							                      </div>
 					                        </div>
                             </a>    
@@ -71,7 +71,7 @@ include'header.php';
 					                        <div class='cart-left'>
 							                      <p class='title'>{$row['p_name']}</p>
 							                        <div class='price1'>
-							                          <span class='actual'>Rs. {$row['p_price']}</span>
+							                          <span class='actual'>₩₡ {$row['p_price']}</span>
 							                        </div>
 					                        </div>
                             </a>    
@@ -102,7 +102,7 @@ include'header.php';
                                 echo"<div class='cart-left'>";
                                   echo"<p class='title'>{$row['p_name']}</p>";
                                   echo"<div class='price1'>";
-                                      echo"<span class='actual'>Rs. {$row['p_price']}</span>";
+                                      echo"<span class='actual'>₩₡ {$row['p_price']}</span>";
                                     echo"</div>";
                                 echo"</div>";
                                       echo"</a>";            

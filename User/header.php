@@ -122,9 +122,9 @@
                         $balResult = $balance->get_result();
                         $bal = mysqli_fetch_array($balResult);
 
-                        echo"<li>Balance: ₩₡{$bal['s_bal']}</li>    |";
+                        echo"<li>Balance: ₩₡ {$bal['s_bal']}</li>    |";
                     ?>
-                    <li><a href="seller.php">Seller</a></li> |
+                    <li><a href="seller.php">Account</a></li> |
                     <li><a href="signout.php">Log Out</a></li>
                 </ul>
             </div>
@@ -223,9 +223,9 @@
                                                         echo "<tbody>
                                                         <tr>
                                                             <td> {$row2['p_name']} </td>
-                                                            <td> Rs. $p_pri </td>
+                                                            <td> ₩₡ $p_pri </td>
                                                             <td> $p_qt </td>
-                                                            <td> Rs. $ttl </td>
+                                                            <td> ₩₡ $ttl </td>
                                                            
                                                         </tr>
                                                     </tbody>";

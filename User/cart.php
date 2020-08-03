@@ -28,7 +28,7 @@ include'header.php';
                 echo"<tr>
                     <td> $num  </td> 
                     <td> {$row1['p_name']} </td>
-                    <td> Rs.{$row1['p_price']}</td>
+                    <td> ₩₡ {$row1['p_price']}</td>
                     <td>  <input type='text' value='{$row1['c_p_qty']}'></td> 
                     <td> $ttl_amt</td>
                     <td><a href=\"cart.php?del_id={$row1['p_id']}\">Delete Product</a></td>

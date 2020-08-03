@@ -88,6 +88,7 @@ CREATE TABLE `t_order_user_det` (
   `s_t_email` varchar(50) NOT NULL,
   `s_loc` varchar(30) NOT NULL,  
   `o_date` date NOT NULL,
+  `o_price` int(11) UNSIGNED NOT NULL,
   `o_escrow` int(11) UNSIGNED NOT NULL,
   `b_ver` int(1) UNSIGNED NOT NULL,
   `s_ver` int(1) UNSIGNED NOT NULL,

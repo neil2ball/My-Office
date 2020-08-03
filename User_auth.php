@@ -47,7 +47,7 @@ if (isset($_POST['usr_login'])){
 				session_write_close();
 				
 				echo '<script language="javascript">';
-                        echo 'alert("Login Successfull"); location.href="User/index.php"';
+                        echo 'alert("Login Successful"); location.href="User/index.php"';
 				echo '</script>';
 			} else {
 				//Login failed 

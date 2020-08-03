@@ -29,7 +29,7 @@ include'header.php';
                 echo"<tr>
                     <td> $num  </td> 
                     <td> {$row1['p_name']} </td>
-                    <td> Rs.{$row1['p_price']}</td>
+                    <td> ₩₡ {$row1['p_price']}</td>
                     <td> {$row1['c_p_qty']}</td> 
                     <td> $ttl_amt</td>
                   </tr> ";
@@ -118,9 +118,9 @@ include'header.php';
               $buyVer = 0;
               $sellVer = 0;
               $date_now = date('Y-m-d H:i:s');                      
-              $save = $conn->prepare("INSERT INTO t_order_user_det ( p_id, p_name, p_amt, b_id, b_name, b_email, b_t_email, b_loc, s_id, s_name, s_email, s_t_email, s_loc, o_date, o_escrow, b_ver, s_ver) "
-              . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-              $save->bind_param('isiissssisssssiii', $p_id, $p_name, $p_amt, $buyId, $buyName, $buyEmail, $buyTeachEmail, $buyLoc, $sellId, $sellName, $sellEmail, $sellTeachEmail, $sellLoc, $date_now, $price, $buyVer, $sellVer);
+              $save = $conn->prepare("INSERT INTO t_order_user_det ( p_id, p_name, p_amt, b_id, b_name, b_email, b_t_email, b_loc, s_id, s_name, s_email, s_t_email, s_loc, o_date, o_price, o_escrow, b_ver, s_ver) "
+              . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+              $save->bind_param('isiissssisssssiiii', $p_id, $p_name, $p_amt, $buyId, $buyName, $buyEmail, $buyTeachEmail, $buyLoc, $sellId, $sellName, $sellEmail, $sellTeachEmail, $sellLoc, $date_now, $price, $price, $buyVer, $sellVer);
               $save->execute();
 
               $cart = $conn->prepare("DELETE FROM t_cart WHERE c_id = ?");
