@@ -242,9 +242,9 @@ include 'teach_header.php';
 
 
 
-              <!-- Getting Customers Deatils -->
+                <!-- Getting Customers Deatils -->
 
-                              <?php 
+                <?php 
              if(isset($_REQUEST['product']))
              {
                 $prdt_table = $conn->prepare("SELECT * FROM t_product WHERE s_t_email = ?");
@@ -283,8 +283,18 @@ include 'teach_header.php';
                             echo"<td>{$row['p_wt']}</td>";
                             echo"<td>{$row['p_price']}</td>";
                             echo"<td>{$row['p_desc']}</td>";
-                            echo"<td><a href=\"#\" style='text-decoration:none'>Edit </a></td>";
-                            echo"<td><a href=\"#\" style='text-decoration:none'>Delete</a></td>";
+
+
+                            echo"<form action=\"edit.php\" method=\"post\">";
+                            echo"<input type=\"hidden\" name=\"action\" value=\"submit\" />";
+                            echo"<td><button name=\"p_id\" type=\"submit\" value=\"{$row['p_id']}\">Edit</button></td>";
+                            echo"</form>";
+
+
+                            echo"<form action=\"delete.php\" method=\"post\">";
+                            echo"<input type=\"hidden\" name=\"delete\" value=\"submit\" />";
+                            echo"<td><button name=\"p_id\" type=\"submit\" value=\"{$row['p_id']}\">Delete</button></td>";
+                            echo"</form>";
                            
                           echo"</tr>";              
                         }

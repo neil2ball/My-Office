@@ -186,7 +186,11 @@ include 'teach_header.php';
                     </form>
                 </div>
 
-                <!-- Custom Supplier-->
+            </section><!-- left col -->
+
+            <section class="col-lg-5 connectedSortable"><!-- right col -->
+
+                <!-- Transfer Funds to Students-->
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Transfer Funds to Student Balance :: My Office</h3>
@@ -209,7 +213,7 @@ include 'teach_header.php';
                                 <label for="inputBal4" class="col-sm-2 control-label">Balance</label>
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control" id="inputBal4"
-                                        placeholder="Enter Account Balance" name="bal">
+                                        placeholder="Enter Account Balance" name="bal" min="1">
                                 </div>
                             </div>
 
@@ -220,8 +224,55 @@ include 'teach_header.php';
                             <button type="reset" class="btn btn-default pull-right">Cancel</button>
                         </div><!-- /.box-footer -->
                     </form>
-                </div>
+                </div><!-- Transfer Funds to Students-->
 
+                <!-- Change password box -->
+                <div class="box box-solid bg-light-blue-gradient">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Change Password :: My Office</h3>
+                        </div><!-- /.box-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" method="post"
+                            action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+                            <div class="box-body">
+
+                                <div class="form-group">
+                                    <label for="inputPassword4" class="col-sm-2 control-label">Old Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="inputPassword4"
+                                            placeholder="Old Password" name="old_pwd">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputPassword5" class="col-sm-2 control-label">Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="inputPassword5"
+                                            placeholder="New Password" name="new_pwd0">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputPassword6" class="col-sm-2 control-label">Confirm Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="inputPassword6"
+                                            placeholder="Confirm New Password" name="new_pwd1">
+                                    </div>
+                                </div>
+
+                            </div><!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-info " name="pwd_reg">Submit</button>
+                                <button type="reset" class="btn btn-default pull-right">Cancel</button>
+
+                            </div><!-- /.box-footer -->
+
+                        </form>
+
+                    </div>
+                </div><!-- /.box --> <!--Change password box-->
 
             </section><!-- right col -->
 
@@ -259,81 +310,100 @@ include 'teach_header.php';
       $supp_bal  = clean($_POST['bal']);
 
 
-      if ($supp_pwd0 != '' && $supp_pwd0 == $supp_pwd1 && strlen($supp_pwd1) > 7)
-      {  //$supp_pwd0 = md5($supp_pwd0);
+      $result = $conn->prepare("SELECT * FROM t_supplier WHERE s_email= ?");
+      $result->bind_param('s', $supp_mail);
+      $result->execute();
+      $resultResult = $result->get_result();
+      $num_rows = mysqli_num_rows($resultResult);
+     
+      if ($num_rows) 
+      {
+        ?>
 
-        $supp_pwd0Hash = password_hash($supp_pwd0, PASSWORD_ARGON2ID);
+        <script language="javascript">
+        alert("This user already exists.");
+        location.href = "index.php";
+        </script>;
 
-        if (password_verify($supp_pwd0, $supp_pwd0Hash))
-        {
-            $teacher = $conn->prepare("SELECT s_bal from t_supplier where s_email = ?");
-            $teacher->bind_param("s", $id);
-            $teacher->execute();
-            $teacherResult = $teacher->get_result();
-            $teacherArr = mysqli_fetch_array($teacherResult);
+        <?php
 
-            $teachBal = $teacherArr['s_bal'];
+      } else {
 
-            if($teachBal >= $supp_bal)
+        if ($supp_pwd0 != '' && $supp_pwd0 == $supp_pwd1 && strlen($supp_pwd1) > 7)
+        {  //$supp_pwd0 = md5($supp_pwd0);
+
+            $supp_pwd0Hash = password_hash($supp_pwd0, PASSWORD_ARGON2ID);
+
+            if (password_verify($supp_pwd0, $supp_pwd0Hash))
             {
-                $teachBal = $teachBal - $supp_bal;
+                $teacher = $conn->prepare("SELECT s_bal from t_supplier where s_email = ?");
+                $teacher->bind_param("s", $id);
+                $teacher->execute();
+                $teacherResult = $teacher->get_result();
+                $teacherArr = mysqli_fetch_array($teacherResult);
 
-                $teachWD = $conn->prepare("UPDATE t_supplier SET s_bal= ? WHERE s_email = ?");
-                $teachWD->bind_param('is', $teachBal, $id);
-                $teachWD->execute();
+                $teachBal = $teacherArr['s_bal'];
 
-                $save_supp_data = $conn->prepare("INSERT INTO t_supplier "
-                . "(a_id, s_name, s_email, s_pwd, s_loc, s_bal)"
-                . "VALUES (?, ?, ?, ?, ?, ?)"
-                );
-
-                $save_supp_data->bind_param("sssssi", $id, $supp_name, $supp_mail, $supp_pwd0Hash, $supp_loc, $supp_bal);
-
-                if($save_supp_data->execute())
+                if($teachBal >= $supp_bal)
                 {
-                    $save_supp_data->close();
-                    $conn->close();
-                    ?>
-                    <script language="javascript">
-                    alert('Registration Successful');
-                    location.href = "index.php";
-                    </script>;
-                    <?php 
+                    $teachBal = $teachBal - $supp_bal;
+
+                    $teachWD = $conn->prepare("UPDATE t_supplier SET s_bal= ? WHERE s_email = ?");
+                    $teachWD->bind_param('is', $teachBal, $id);
+                    $teachWD->execute();
+
+                    $save_supp_data = $conn->prepare("INSERT INTO t_supplier "
+                    . "(a_id, s_name, s_email, s_pwd, s_loc, s_bal)"
+                    . "VALUES (?, ?, ?, ?, ?, ?)"
+                    );
+
+                    $save_supp_data->bind_param("sssssi", $id, $supp_name, $supp_mail, $supp_pwd0Hash, $supp_loc, $supp_bal);
+
+                    if($save_supp_data->execute())
+                    {
+                        $save_supp_data->close();
+                        $conn->close();
+                        ?>
+                        <script language="javascript">
+                        alert('Registration Successful');
+                        location.href = "index.php";
+                        </script>;
+                        <?php 
+                    } else {
+                        $save_supp_data->close();
+                        $conn->close();
+                        ?>
+                        <script language="javascript">
+                        alert('Something went wrong.');
+                        location.href = "index.php";
+                        </script>;
+                        <?php 
+                    }
                 } else {
-                    $save_supp_data->close();
-                    $conn->close();
                     ?>
                     <script language="javascript">
-                    alert('Something went wrong.');
+                    alert('You lack sufficient funds for this transaction.');
                     location.href = "index.php";
                     </script>;
-                    <?php 
+                    <?php
+
                 }
             } else {
                 ?>
                 <script language="javascript">
-                alert('You lack sufficient funds for this transaction.');
+                alert('Confirmation Password Not Verified');
                 location.href = "index.php";
                 </script>;
-               <?php
-
+                <?php
             }
-        } else
-        {
-          ?>
-          <script language="javascript">
-          alert('Confirmation Password Not Verified');
-          location.href = "index.php";
-          </script>;
-         <?php
+        } else {
+            ?>
+            <script language="javascript">
+            alert('You must have matching passwords of at least 8 characters in length.');
+            location.href = "index.php";
+            </script>;
+            <?php
         }
-      } else {
-        ?>
-        <script language="javascript">
-        alert('You must have matching passwords of at least 8 characters in length.');
-        location.href = "index.php";
-        </script>;
-        <?php
       }
     }
         
@@ -522,3 +592,99 @@ include 'teach_header.php';
 	}
   ?>
 </div>
+
+<!-- Change Password-->
+
+<div>
+
+    <?php
+
+  if(isset($_POST['pwd_reg']))
+  {
+
+    function clean($str) {
+        $str = @trim($str);
+        $str = stripslashes($str);
+        include ('../includes/connection.php');
+        return mysqli_real_escape_string($conn, $str);
+      }
+                            
+    $old_pwd    = clean($_POST['old_pwd']);
+    $new_pwd0   = clean($_POST['new_pwd0']);
+    $new_pwd1   = clean($_POST['new_pwd1']);
+
+    if($new_pwd0 == $new_pwd1 && strlen($new_pwd1) > 7)
+    {
+      //Create query
+
+      
+      $result = $conn->prepare("SELECT * FROM t_teach WHERE t_email= ?");
+      $result->bind_param('s', $id);
+      $result->execute();
+      $resultResult = $result->get_result();
+      $num_rows = mysqli_num_rows($resultResult);
+     
+      if ($num_rows) 
+      {
+        $new_pwd0Hash = password_hash($new_pwd0, PASSWORD_ARGON2ID);
+        
+        if(password_verify($new_pwd0, $new_pwd0Hash))
+        {
+          $result1 = $conn->prepare("UPDATE t_teach SET t_pwd= ? WHERE t_email= ?");
+
+          $result1->bind_param("ss", $new_pwd0Hash, $id);
+         
+          if($result1->execute())
+          {
+            $result1->close();
+            $conn->close();
+
+            echo '<script language="javascript">';
+              echo 'alert("Password changed successfully."); location.href="index.php"';
+            echo '</script>';
+          } else {
+     
+            ?>
+
+            <script language="javascript">
+            alert("<?php echo mysqli_error($conn) ?>");
+            location.href = "index.php";
+            </script>;
+
+            <?php
+            $result1->close();
+            $conn->close();
+          }
+        } else {
+          echo '<script language="javascript">';
+            echo 'alert("Password Not Verified"); location.href="index.php"';
+          echo '</script>';
+        }
+     
+      } else {
+
+        ?>
+
+        <script language="javascript">
+        alert("<?php echo "
+            User does not exist." ?>");
+        location.href = "index.php";
+        </script>;
+    
+        <?php
+      }
+    }	 else {
+
+      echo '<script language="javascript">';
+        echo 'alert("Passwords do not match."); location.href="index.php"';
+      echo '</script>';
+    }
+            
+  }
+        
+ ?>
+
+
+</div>
+
+<!-- Change Password-->
