@@ -1,23 +1,21 @@
 <?php 
 $title="Home";
-include'header.php';
+include 'header.php';
 ?>
   <!-- start slider -->
     <div id="fwslider">
         <div class="slider_container">
             <div class="slide"> 
                 <!-- Slide image -->
-                    <img src="../images/banner.jpg" alt=""/>
+                    <img src="../images/wildcatlow.jpg" alt=""/>
                 <!-- /Slide image -->
                 <!-- Texts container -->
                 <div class="slide_content">
                     <div class="slide_content_wrap">
                         <!-- Text title -->
-                        <!--<h4 class="title">Premimum Products</h4>-->
-                        <!-- /Text title -->
-                        
+                        <h4 class="title">TFW no ₩₡.</h4>
                         <!-- Text description -->
-                        <!--<p class="description">Lowest Price</p>-->
+                        <p class="description">Y U No buy stuff?</p>
                         <!-- /Text description -->
                     </div>
                 </div>
@@ -25,11 +23,14 @@ include'header.php';
             </div>
             <!-- /Duplicate to create more slides -->
             <div class="slide">
-                <img src="../images/banner1.jpg" alt=""/>
+                <img src="../images/wildcatslow.jpg" alt=""/>
                 <div class="slide_content">
                     <div class="slide_content_wrap">
-                        <!--<h4 class="title">Fresh and Best</h4>-->
-                        <!--<p class="description">Vegitables</p>-->
+
+                        <!-- Text title -->
+                        <h4 class="title">Purrease!</h4>
+                        <!-- /Text title -->
+                        <p class="description">I can has ₩₡?</p>
                     </div>
                 </div>
             </div>
@@ -55,32 +56,36 @@ include'header.php';
                             {
                                 $rows[] = $row;
                             }
-
-                            for ($i = 0; $i < 10; $i++)
+                            
+                            if($rowCount > 0)
                             {
-                                $rowRand = rand(0, $rowCount - 1);
-                                $row1 = $rows[$rowRand];
-                                
-                                if($row1['p_qty'] > 0)
+                                for ($i = 0; $i < 10; $i++)
                                 {
-                                    echo " <div class='col_1_of_3 span_1_of_3'> "; 
-	                                    echo "<a href=\"single.php?product={$row1['p_id']}\"/>";
-		                                echo"<div class='inner_content clearfix'>";
-		                                    echo"<div class='product_image'> <img src='../{$row1['p_img']}'  alt='' width='200' height='200'/> </div> ";
-                                                echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
-                                                    echo"<div class='price'>";
-			                                            echo"<div class='cart-left'>";
-				                                            echo"<p class='title'>{$row1['p_name']}</p>";
-				                                            echo"<div class='price1'>";
-				                                                echo"<span class='actual'>₩₡ {$row1['p_price']}</span>";
+
+                                    $rowRand = rand(0, $rowCount - 1);
+                                    $row1 = $rows[$rowRand];
+                                
+                                    if($row1['p_qty'] > 0)
+                                    {
+                                        echo " <div class='col_1_of_3 span_1_of_3'> "; 
+	                                        echo "<a href=\"single.php?product={$row1['p_id']}\"/>";
+		                                    echo"<div class='inner_content clearfix'>";
+		                                        echo"<div class='product_image'> <img src='../{$row1['p_img']}'  alt='' width='200' height='200'/> </div> ";
+                                                    echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
+                                                        echo"<div class='price'>";
+			                                                echo"<div class='cart-left'>";
+				                                                echo"<p class='title'>{$row1['p_name']}</p>";
+				                                                echo"<div class='price1'>";
+				                                                    echo"<span class='actual'>₩₡ {$row1['p_price']}</span>";
+			                                                    echo"</div>";
 			                                                echo"</div>";
-			                                            echo"</div>";
-			                                            echo"<div class='cart-right'> </div>";
-			                                            echo"<div class='clear'></div>";
-			                                        echo"</div>";				
-                                                echo"</div>";
-                                        echo"</a>";
-                                    echo"</div>";
+			                                                echo"<div class='cart-right'> </div>";
+			                                                echo"<div class='clear'></div>";
+			                                            echo"</div>";				
+                                                    echo"</div>";
+                                            echo"</a>";
+                                        echo"</div>";
+                                    }
                                 }
                             }
                             ?>   

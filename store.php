@@ -6,10 +6,9 @@ include'header.php';
   <div class="main">
      <div class="wrap">
 		  <div class="cont span_2_of_3">
-		  	<h2 class="head">Search result</h2>
           <div class="top-box">
             <?php 
-            if(isset($_GET['search']))
+            if(isset($_GET['store']))
             {
 
               function clean($str) {
@@ -19,13 +18,20 @@ include'header.php';
                 return mysqli_real_escape_string($conn, $str);
               }
         
-              $p_search = clean($_GET['name']);
+              $p_search = clean($_GET['store']);
+
+              $name = $conn->prepare("SELECT s_name FROM t_supplier WHERE s_id= ?");
+              $name->bind_param('i', $p_search);
+              $name->execute();
+              $nameResult = $name->get_result();
+              $nameArr = mysqli_fetch_array($nameResult);
+
+              $nameName = $nameArr['s_name'];
+              ?><h2 class="head">Store of <?php echo $nameName?></h2><?php
                             
               $count = 0;
-              $res1 = $conn->prepare("SELECT * FROM t_product WHERE p_name like ? OR p_desc like ?");
-
-              $like = "%{$p_search}%";
-              $res1->bind_param('ss', $like, $like);
+              $res1 = $conn->prepare("SELECT * FROM t_product WHERE s_id= ?");
+              $res1->bind_param('i', $p_search);
               $res1->execute();
               $res1Result = $res1->get_result();
                           
@@ -64,31 +70,20 @@ include'header.php';
               $conn->close();
 
             } else {
-              $product = mysqli_query($conn, "SELECT * FROM t_product ORDER BY p_id DESC");
+              
+		  	      ?><h2 class="head">Stores</h2><?php
+
+              $product = mysqli_query($conn, "SELECT * FROM t_supplier ORDER BY s_id ASC");
 
               while ($row = mysqli_fetch_array($product))
               {
-                if($row['p_qty'] > 0)
-                {
-                  echo " <div class='col_1_of_3 span_1_of_3'> "; 
-                    echo"<div class='inner_content clearfix'>";
-                          echo "<a href=\"single.php?product={$row['p_id']}\"/>";
-                      echo"<div class='product_image'> <img src='{$row['p_img']}' alt='' width='200' height='200'/> </div> ";
-                              echo"<div class='sale-box'><span class='on_sale title_shop'>New</span></div>";	
-                                  echo"<div class='price'>";
-                                echo"<div class='cart-left'>";
-                                  echo"<p class='title'>{$row['p_name']}</p>";
-                                  echo"<div class='price1'>";
-                                      echo"<span class='actual'>₩₡ {$row['p_price']}</span>";
-                                    echo"</div>";
-                                echo"</div>";
-                                      echo"</a>";            
-                                echo"<a href ='#'><div class='cart-right'> </div></a>";
-                                      echo"<div class='clear'></div>";
-                            echo"</div>";
-                              echo"</div>";
-                        echo"</div>";
-                }
+                    echo " <div class='col_1_of_3 span_1_of_3'> "; 
+                      echo"<div class='inner_content clearfix'>";
+                        echo "<a href=\"store.php?store={$row['s_id']}\"/>";
+                          echo"<p class='title'>{$row['s_name']}</p>";
+                        echo"</a>";
+                      echo"</div>";
+                    echo"</div>";
               }
             }
             

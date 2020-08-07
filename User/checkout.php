@@ -136,7 +136,7 @@ include'header.php';
           if ($success)
           {
             echo("<script type=\"text/javascript\">
-              window.location.href='checkout.php';
+              window.location.href='data.php?order';
             </script>");
           } else
           {

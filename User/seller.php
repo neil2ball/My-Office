@@ -137,7 +137,7 @@ include 'seller_header.php';
                                         placeholder="Upload Product Image" name="image">
                                 </div>
                             </div>
-
+                        <p>Maximum Image Size: <?php echo ini_get('upload_max_filesize'); ?></p>
                         </div><!-- /.box-body -->
                         <div class="box-footer">
                             <button type="submit" class="btn btn-info " name="prdt_upload">Upload</button>

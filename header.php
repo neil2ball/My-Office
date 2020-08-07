@@ -65,14 +65,15 @@ include 'includes/connection.php';
 			});
 		</script>	
 </head>
+
 <body>
-     <div class="header-top">
-	   <div class="wrap"> 
+    <div class="header-top">
+		<div class="wrap"> 
 			  
-			 <div class="cssmenu">
+			<div class="cssmenu">
 				<ul>
 					
-                    <li><a href="Admin_login.php">Admin Login</a></li> |
+            		<li><a href="Admin_login.php">Admin Login</a></li> |
 					<li><a href="Teacher_login.php">Teacher Login</a></li> |
 					<li><a href="login.php"> User Log In</a></li>
 
@@ -81,6 +82,7 @@ include 'includes/connection.php';
 			<div class="clear"></div>
  		</div>
 	</div>
+
 	<div class="header-bottom">
 	    <div class="wrap">
 			<div class="header-bottom-left">
@@ -88,14 +90,26 @@ include 'includes/connection.php';
 					<a href="index.php"><img src="images/logo.png" alt=""/></a>
 				</div>
 				<div class="menu">
-	            <ul class="megamenu skyblue">
-			<li class="active grid"><a href="index.php">Home</a></li>
-                        <li><a class="color6" href="about.php">About</a></li>
+	            	<ul class="megamenu skyblue">
+						<li class="active grid"><a href="index.php">Home</a></li>
+						<li><a class="color4" href="store.php">Stores</a></li>
+						<li><a class="color4" href="veg.php">Explore Products</a></li>
+                    	<li><a class="color6" href="about.php">About</a></li>
                         
-			</ul>
+					</ul>
+				</div>
 			</div>
-		</div>
+			
+			<div class="header-bottom-right">
+                <div class="search">
+
+                    <form action="veg.php" method="get">
+                        <input type="text" class="textbox" name="name" placeholder="search" required="">
+                        <input type="submit" id="submit" name="search" value="Search">
+                        <div id="response"> </div>
+                    </form>
+                </div>
+			</div>
+    	</div>
+     	<div class="clear"></div>
     </div>
-     <div class="clear"></div>
-     </div>
-	</div>
